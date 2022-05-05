@@ -1,0 +1,7 @@
+.bottomParagraph {
+	composes: bottomParagraph from "../../App.module.css";
+}
+
+.actionButtonWrapper {
+	composes: actionButtonWrapper from "../../App.module.css";
+}

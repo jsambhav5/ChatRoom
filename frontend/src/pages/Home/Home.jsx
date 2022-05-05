@@ -18,22 +18,19 @@ const Home = () => {
 	};
 
 	return (
-		<div className={styles.cardWrapper}>
+		<div className="cardWrapper">
 			<Card title="Welcome to ChatRoom" icon="logo">
 				<p className={styles.text}>
-					We’re working hard to get ChatRoom ready for everyone! While
-					we wrap up the finishing touches, we’re adding people
-					gradually to make sure nothing breaks
+					ChatRoom is a Group Voice calling App based on Peer-to-Peer
+					Network. It is a secured way to connect with your friends,
+					family and colleagues
 				</p>
 				<div>
-					<Button
-						onClick={startRegister}
-						text="Get Your Username"
-					></Button>
+					<Button onClick={startRegister} text="Create New Account" />
 				</div>
-				<div>
+				<div className={styles.signInWrapper}>
 					<span className={styles.hasInvite}>
-						Have an invite text?
+						Already have an Account?
 					</span>
 					<Link style={signInLinkStyle} to="/login">
 						SignIn

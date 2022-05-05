@@ -2,15 +2,15 @@
 	font-size: 20px;
 	line-height: 1.6;
 	color: #c4c5c5;
-}
-
-.cardWrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 6rem;
+	padding: 10px 10px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .hasInvite {
 	color: #0077ff;
+}
+
+.signInWrapper {
+	margin-top: 10px;
 }

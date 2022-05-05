@@ -19,9 +19,22 @@ const Navigation = () => {
 	return (
 		<nav className={`${styles.navbar} container`}>
 			<Link style={brandStyle} to="/">
-				<img src="/images/logo.png" alt="Logo" />
+				<img
+					src="/images/logo.png"
+					className={`${styles.logo}`}
+					alt="Logo"
+				/>
 				<span style={logoText}>ChatRoom</span>
 			</Link>
+			<div className={`${styles.navRight}`}>
+				<Link to="/login">
+					<span style={logoText}>LogIn</span>
+				</Link>
+
+				<Link to="/register">
+					<span style={logoText}>SignUp</span>
+				</Link>
+			</div>
 		</nav>
 	);
 };
