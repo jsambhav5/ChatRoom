@@ -1,0 +1,13 @@
+export { default as ACTIONS } from "./actions";
+
+const {
+	REACT_APP_BASE_URL,
+	REACT_APP_BACK_END_PORT,
+	REACT_APP_FRONT_END_PORT,
+} = process.env;
+
+export const [BASE_URL, BACK_END_PORT, FRONT_END_PORT] = [
+	REACT_APP_BASE_URL,
+	REACT_APP_BACK_END_PORT,
+	REACT_APP_FRONT_END_PORT,
+];

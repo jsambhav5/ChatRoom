@@ -1,0 +1,23 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+export { default as ACTIONS } from "./actions";
+
+export const {
+	BASE_URL,
+	BACK_END_PORT,
+	FRONT_END_PORT,
+	DEBUG_MODE,
+	DB_BASE_URL,
+	DB_PORT,
+	DB_NAME,
+	JWT_ACCESS_TOKEN_SECRET,
+	JWT_REFRESH_TOKEN_SECRET,
+	OTP_HASH_SECRET,
+	PASSWORD_HASH_SECRET,
+	GMAIL_CLIENT_ID,
+	GMAIL_CLIENT_SECRET,
+	GMAIL_REDIRECT_URI,
+	GMAIL_REFRESH_TOKEN,
+	GMAIL_EMAIL_FROM,
+} = process.env;
