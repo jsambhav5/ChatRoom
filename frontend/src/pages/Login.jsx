@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { LoginEmail, LoginPassword } from "../components";
+import { useSelector } from "react-redux";
 
 const steps = {
 	1: LoginEmail,
@@ -7,16 +8,12 @@ const steps = {
 };
 
 const Login = () => {
-	const [step, setStep] = useState(1);
+	const step = useSelector((state) => state.login.step);
 	const Step = steps[step];
-
-	const onNext = () => {
-		if (step < 2) setStep(step + 1);
-	};
 
 	return (
 		<div className="cardWrapper">
-			<Step onNext={onNext} />
+			<Step />
 		</div>
 	);
 };

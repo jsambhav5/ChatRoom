@@ -4,6 +4,7 @@ const initialState = {
 	isLoggedIn: false,
 	email: "",
 	user: null,
+	step: 1,
 };
 
 export const loginSlice = createSlice({
@@ -19,9 +20,12 @@ export const loginSlice = createSlice({
 		setLogin: (state, action) => {
 			state.isLoggedIn = action.payload;
 		},
+		setStep: (state, action) => {
+			state.step = action.payload;
+		},
 	},
 });
 
-export const { setUser, setEmail, setLogin } = loginSlice.actions;
+export const { setUser, setEmail, setLogin, setStep } = loginSlice.actions;
 
 export default loginSlice.reducer;

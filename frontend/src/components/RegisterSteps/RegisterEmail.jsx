@@ -4,20 +4,29 @@ import { sendOTP } from "../../http";
 import styles from "./RegisterSteps.module.css";
 import { useDispatch } from "react-redux";
 import { setOTP } from "../../store/otpSlice";
+import { Navigate, useNavigate } from "react-router-dom";
+import { setStep } from "../../store/registerSlice";
 
-const RegisterEmail = ({ onNext }) => {
+const RegisterEmail = () => {
 	const [email, setEmail] = useState("");
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-	async function submit() {
+	async function next() {
 		try {
-			const res = await sendOTP({ email });
-			if (res.status === 200) {
-				const { email, hash } = res.data;
-				dispatch(setOTP({ email, hash }));
-				onNext();
-			}
-		} catch (error) {}
+			// const res = await sendOTP({ email });
+			// if (res.status === 200) {
+			// const { email, hash } = res.data;
+			// dispatch(setOTP({ email, hash }));
+			dispatch(setStep(2));
+			// }
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	function back() {
+		navigate("/");
 	}
 
 	return (
@@ -28,8 +37,8 @@ const RegisterEmail = ({ onNext }) => {
 			/>
 			<div>
 				<div className={styles.actionButtonWrapper}>
-					<BackButton onClick={onNext} text="Back" />
-					<Button onClick={submit} text="Next" />
+					<BackButton onClick={back} text="Back" />
+					<Button onClick={next} text="Next" />
 				</div>
 				<p className={styles.bottomParagraph}>
 					By entering your email-id, you’re agreeing to our Terms of

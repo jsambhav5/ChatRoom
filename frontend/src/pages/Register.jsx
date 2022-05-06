@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-// import styles from "./Register.module.css";
+import React from "react";
+import { useSelector } from "react-redux";
+
 import {
 	RegisterEmail,
 	RegisterOTP,
@@ -17,16 +18,12 @@ const steps = {
 };
 
 const Register = () => {
-	const [step, setStep] = useState(1);
+	const step = useSelector((state) => state.register.step);
 	const Step = steps[step];
-
-	const onNext = () => {
-		if (step < 5) setStep(step + 1);
-	};
 
 	return (
 		<div className="cardWrapper">
-			<Step onNext={onNext} />
+			<Step />
 		</div>
 	);
 };
