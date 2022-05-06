@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, TextInput } from "..";
+import { Card, Button, BackButton, TextInput } from "..";
 import styles from "./RegisterSteps.module.css";
 
 const RegisterPassword = ({ onNext }) => {
@@ -12,6 +12,7 @@ const RegisterPassword = ({ onNext }) => {
 			/>
 			<div>
 				<div className={styles.actionButtonWrapper}>
+					<BackButton onClick={onNext} text="Back" />
 					<Button onClick={onNext} text="Next" />
 				</div>
 				<p className={styles.bottomParagraph}>

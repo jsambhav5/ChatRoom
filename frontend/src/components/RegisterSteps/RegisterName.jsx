@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, TextInput } from "..";
+import { Card, Button, BackButton, TextInput } from "..";
 import styles from "./RegisterSteps.module.css";
 
 const RegisterName = ({ onNext }) => {
@@ -9,6 +9,7 @@ const RegisterName = ({ onNext }) => {
 			<TextInput value={name} onChange={(e) => setName(e.target.value)} />
 			<div>
 				<div className={styles.actionButtonWrapper}>
+					<BackButton onClick={onNext} text="Back" />
 					<Button onClick={onNext} text="Next" />
 				</div>
 				<p className={styles.bottomParagraph}>

@@ -1,5 +1,5 @@
 import React from "react"; //, { useState }
-import { Card, Button } from "..";
+import { Card, Button, BackButton } from "..";
 import styles from "./RegisterSteps.module.css";
 
 const RegisterAvatar = ({ onNext }) => {
@@ -8,6 +8,7 @@ const RegisterAvatar = ({ onNext }) => {
 			<Card title="Add Avatar" icon="logo">
 				<div>
 					<div className={styles.actionButtonWrapper}>
+						<BackButton onClick={onNext} text="Back" />
 						<Button onClick={onNext} text="Next" />
 					</div>
 					<p className={styles.bottomParagraph}>

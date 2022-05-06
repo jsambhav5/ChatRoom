@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, TextInput } from "../";
+import { Card, Button, BackButton, TextInput } from "../";
 import { sendOTP } from "../../http";
 import styles from "./RegisterSteps.module.css";
 import { useDispatch } from "react-redux";
@@ -28,6 +28,7 @@ const RegisterEmail = ({ onNext }) => {
 			/>
 			<div>
 				<div className={styles.actionButtonWrapper}>
+					<BackButton onClick={onNext} text="Back" />
 					<Button onClick={submit} text="Next" />
 				</div>
 				<p className={styles.bottomParagraph}>

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginSteps.module.css";
-import { Card, Button, TextInput } from "..";
+import { Card, Button, BackButton, TextInput } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setLogin } from "../../store/loginSlice.js";
 import { login } from "../../http";
 
-const LoginPassword = () => {
+const LoginPassword = ({ onNext }) => {
 	const [password, setPassword] = useState("");
 	const email = useSelector((state) => state.login.email);
 	const dispatch = useDispatch();
@@ -33,6 +33,7 @@ const LoginPassword = () => {
 			/>
 			<div>
 				<div className={styles.actionButtonWrapper}>
+					<BackButton onClick={onNext} text="Back" />
 					<Button onClick={Submit} text="Next" />
 				</div>
 				<p className={styles.bottomParagraph}>
