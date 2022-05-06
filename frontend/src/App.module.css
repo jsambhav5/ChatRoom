@@ -8,4 +8,8 @@
 
 .actionButtonWrapper {
 	margin-top: 40px;
+	display: flex;
+	align-items: center;
+	padding-left: 50px;
+	padding-right: 50px;
 }

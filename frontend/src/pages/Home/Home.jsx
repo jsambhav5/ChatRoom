@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Home.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Card, Button } from "../../components";
+import { useDispatch } from "react-redux";
+import { setStep as setRegisterStep } from "../../store/registerSlice";
+import { setStep as setLoginStep } from "../../store/loginSlice";
 
 const Home = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(setRegisterStep(1));
+		dispatch(setLoginStep(1));
+	});
 
 	const startRegister = () => {
 		navigate("/register");

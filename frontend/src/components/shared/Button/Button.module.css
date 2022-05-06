@@ -13,14 +13,18 @@
 	border-radius: 50px;
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
-	margin-top: 30px;
-	margin-bottom: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 .button:hover {
 	background: #014a9c;
 }
 
-.arrow {
+.rightArrow {
 	margin-left: 10px;
+}
+
+.leftArrow {
+	margin-right: 10px;
 }

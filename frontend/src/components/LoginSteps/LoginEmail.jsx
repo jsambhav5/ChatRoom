@@ -1,16 +1,23 @@
 import React, { useState } from "react";
-import { Card, Button, TextInput } from "..";
+import { useNavigate } from "react-router-dom";
+import { Card, Button, BackButton, TextInput } from "..";
 import styles from "./LoginSteps.module.css";
 import { useDispatch } from "react-redux";
 import { setEmail as saveEmail } from "../../store/loginSlice.js";
+import { setStep } from "../../store/loginSlice";
 
-const LoginEmail = ({ onNext }) => {
+const LoginEmail = () => {
 	const [email, setEmail] = useState("");
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	function submit() {
+	function next() {
 		dispatch(saveEmail(email));
-		onNext();
+		dispatch(setStep(2));
+	}
+
+	function back() {
+		navigate("/");
 	}
 
 	return (
@@ -21,7 +28,8 @@ const LoginEmail = ({ onNext }) => {
 			/>
 			<div>
 				<div className={styles.actionButtonWrapper}>
-					<Button onClick={submit} text="Next" />
+					<BackButton onClick={back} text="Back" />
+					<Button onClick={next} text="Next" />
 				</div>
 				<p className={styles.bottomParagraph}>
 					By entering your email-id, you’re agreeing to our Terms of

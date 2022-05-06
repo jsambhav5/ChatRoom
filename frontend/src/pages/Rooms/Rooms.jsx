@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setStep as setRegisterStep } from "../../store/registerSlice";
+import { setStep as setLoginStep } from "../../store/loginSlice";
 
 const Rooms = () => {
-  return (
-	<div>Rooms</div>
-  )
-}
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(setRegisterStep(1));
+		dispatch(setLoginStep(1));
+	});
+	return <div>Rooms</div>;
+};
 
-export default Rooms
+export default Rooms;
