@@ -5,10 +5,12 @@ import {
 	setPassword as savePassword,
 	setStep,
 } from "../../store/registerSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const RegisterPassword = () => {
-	const [password, setPassword] = useState("");
+	const [password, setPassword] = useState(
+		useSelector((state) => state.register.password)
+	);
 	const dispatch = useDispatch();
 
 	function next() {
@@ -21,8 +23,9 @@ const RegisterPassword = () => {
 	}
 
 	return (
-		<Card title="Enter Password" icon="logo">
+		<Card title="Enter Your Password" icon="lock-emoji">
 			<TextInput
+				type="password"
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}
 			/>
@@ -32,8 +35,7 @@ const RegisterPassword = () => {
 					<Button onClick={next} text="Next" />
 				</div>
 				<p className={styles.bottomParagraph}>
-					By entering your email-id, you’re agreeing to our Terms of
-					Service and Privacy Policy. Thanks!
+					Please choose a Strong Password
 				</p>
 			</div>
 		</Card>

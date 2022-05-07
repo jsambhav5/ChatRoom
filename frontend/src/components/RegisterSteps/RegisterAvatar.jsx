@@ -1,15 +1,46 @@
 import React, { useState } from "react"; //, { useState }
 import { Card, Button, BackButton } from "..";
 import styles from "./RegisterSteps.module.css";
-import { setAvatar as saveAvatar, setStep } from "../../store/registerSlice";
-import { useDispatch } from "react-redux";
+import {
+	setAvatar as saveAvatar,
+	setStep,
+	initRegister,
+} from "../../store/registerSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../http";
+import { setLogin, setUser } from "../../store/loginSlice";
 
-const RegisterAvatar = ({ onNext }) => {
+const RegisterAvatar = () => {
+	const { email, name, password, avatar } = useSelector(
+		(state) => state.register
+	);
+	const [image, setImage] = useState(avatar);
 	const dispatch = useDispatch();
 
-	function next() {
-		// dispatch(savePassword(password));
-		dispatch(setStep(1));
+	function captureImage(e) {
+		const file = e.target.files[0];
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onloadend = function () {
+			setImage(reader.result);
+			dispatch(saveAvatar(reader.result));
+		};
+	}
+
+	async function next() {
+		try {
+			const res = await register({ email, name, password, avatar });
+			if (res.status === 201) {
+				dispatch(setStep(1));
+				dispatch(setLogin(true));
+				dispatch(setUser(res.data.user));
+				dispatch(initRegister());
+			}
+			dispatch(setStep(3));
+		} catch (error) {
+			dispatch(setStep(3));
+			console.log(error);
+		}
 	}
 
 	function back() {
@@ -18,16 +49,31 @@ const RegisterAvatar = ({ onNext }) => {
 
 	return (
 		<>
-			<Card title="Add Avatar" icon="logo">
+			<Card
+				title={`Okay, ${useSelector((state) => state.register.name)}`}
+				icon="monkey-emoji"
+			>
+				<p className={styles.subHeading}>How’s this photo?</p>
+				<div className={styles.avatarWrapper}>
+					<img
+						className={styles.avatarImage}
+						src={image}
+						alt="avatar"
+					/>
+				</div>
 				<div>
-					<div className={styles.actionButtonWrapper}>
-						<BackButton onClick={back} text="Back" />
-						<Button onClick={next} text="Next" />
-					</div>
-					<p className={styles.bottomParagraph}>
-						By entering your email-id, you’re agreeing to our Terms
-						of Service and Privacy Policy. Thanks!
-					</p>
+					<input
+						onChange={captureImage}
+						id="avatarInput"
+						type="file"
+					/>
+					<label className={styles.inputLabel} htmlFor="avatarInput">
+						Choose a Different Photo
+					</label>
+				</div>
+				<div className={styles.actionButtonWrapper}>
+					<BackButton onClick={back} text="Back" />
+					<Button onClick={next} text="Next" />
 				</div>
 			</Card>
 		</>

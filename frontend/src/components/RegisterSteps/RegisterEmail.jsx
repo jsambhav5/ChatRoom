@@ -2,25 +2,35 @@ import React, { useState } from "react";
 import { Card, Button, BackButton, TextInput } from "../";
 import { sendOTP } from "../../http";
 import styles from "./RegisterSteps.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setOTP } from "../../store/otpSlice";
-import { Navigate, useNavigate } from "react-router-dom";
-import { setStep } from "../../store/registerSlice";
+import { useNavigate } from "react-router-dom";
+import { setStep, setEmail as saveEmail } from "../../store/registerSlice";
 
 const RegisterEmail = () => {
-	const [email, setEmail] = useState("");
+	const [text, setText] = useState(
+		"By entering your email-id, you’re agreeing to our Terms of Service and Privacy Policy. Thanks!"
+	);
+	const [email, setEmail] = useState(
+		useSelector((state) => state.register.email)
+	);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	async function next() {
 		try {
-			// const res = await sendOTP({ email });
-			// if (res.status === 200) {
-			// const { email, hash } = res.data;
-			// dispatch(setOTP({ email, hash }));
-			dispatch(setStep(2));
-			// }
+			setText("Please Wait...  We are sending you the OTP");
+			const res = await sendOTP({ email });
+			if (res.status === 200) {
+				const { email, hash } = res.data;
+				dispatch(setOTP({ email, hash }));
+				dispatch(saveEmail(email));
+				dispatch(setStep(2));
+			} else {
+				setText("Something went Wrong! Please Try Again");
+			}
 		} catch (error) {
+			setText("Something went Wrong! Please Try Again");
 			console.log(error);
 		}
 	}
@@ -32,6 +42,7 @@ const RegisterEmail = () => {
 	return (
 		<Card title="Enter Your Email Address" icon="email-emoji">
 			<TextInput
+				type="email"
 				value={email}
 				onChange={(e) => setEmail(e.target.value)}
 			/>
@@ -40,10 +51,7 @@ const RegisterEmail = () => {
 					<BackButton onClick={back} text="Back" />
 					<Button onClick={next} text="Next" />
 				</div>
-				<p className={styles.bottomParagraph}>
-					By entering your email-id, you’re agreeing to our Terms of
-					Service and Privacy Policy. Thanks!
-				</p>
+				<p className={styles.bottomParagraph}>{text}</p>
 			</div>
 		</Card>
 	);
