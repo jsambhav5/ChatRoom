@@ -18,13 +18,6 @@ const Home = () => {
 		navigate("/register");
 	};
 
-	const signInLinkStyle = {
-		color: "#0077ff",
-		fontWeight: "bold",
-		textDecoration: "none",
-		marginLeft: "10px",
-	};
-
 	return (
 		<div className="cardWrapper">
 			<Card title="Welcome to ChatRoom" icon="logo">
@@ -40,7 +33,7 @@ const Home = () => {
 					<span className={styles.hasInvite}>
 						Already have an Account?
 					</span>
-					<Link style={signInLinkStyle} to="/login">
+					<Link className={styles.signInLink} to="/login">
 						SignIn
 					</Link>
 				</div>

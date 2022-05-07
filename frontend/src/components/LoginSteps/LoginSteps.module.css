@@ -5,3 +5,17 @@
 .actionButtonWrapper {
 	composes: actionButtonWrapper from "../../App.module.css";
 }
+
+.signUpWrapper {
+	margin-top: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.signUpLink {
+	margin-left: 10px;
+	color: #0077ff;
+	font-weight: bold;
+	text-decoration: none;
+}

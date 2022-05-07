@@ -45,42 +45,43 @@ class OtpController {
 			return res.status(400).json({ message: "OTP Expired!" });
 		}
 
-		// Verifying OTP
-		const data = `${email}.${otp}.${expires}`;
-		const isValid = OtpService.checkOTP(hashedOTP, data);
+		try {
+			// Verifying OTP
+			const data = `${email}.${otp}.${expires}`;
+			const isValid = OtpService.checkOTP(hashedOTP, data);
 
-		if (!isValid) {
-			return res.status(401).json({ message: "Invalid OTP" });
+			if (!isValid) {
+				return res.status(401).json({ message: "Invalid OTP" });
+			}
+
+			const user = await UserService.findUser({ email });
+			if (!user) {
+				// Generating Tokens
+				const { accessToken, refreshToken } =
+					TokenService.generateTokens({ email });
+
+				// saving tokens in cookies
+				res.cookie("refreshToken", refreshToken, {
+					maxAge: 1000 * 60 * 60 * 24 * 30,
+					httpOnly: true,
+				});
+
+				res.cookie("accessToken", accessToken, {
+					maxAge: 1000 * 60 * 60 * 24 * 30,
+					httpOnly: true,
+				});
+				return res.status(200).json({ message: "OTP Verified" });
+			}
+
+			const userDTO = new UserDTO(user);
+			const response = await UserService.loginUser(res, user);
+			response.status(200).send({
+				message: "Login Successful",
+				user: userDTO,
+			});
+		} catch (error) {
+			console.log(error);
 		}
-
-		const user = await UserService.findUser({ email });
-		if (!user) {
-			return res.status(200).json({ message: "OTP Verified" });
-		}
-
-		// Generating Tokens
-		const { accessToken, refreshToken } = TokenService.generateTokens({
-			_id: user._id,
-			email: user.email,
-		});
-
-		// saving tokens in cookies
-		res.cookie("refreshToken", refreshToken, {
-			maxAge: 1000 * 60 * 60 * 24 * 30,
-			httpOnly: true,
-		});
-
-		res.cookie("accessToken", accessToken, {
-			maxAge: 1000 * 60 * 60 * 24 * 30,
-			httpOnly: true,
-		});
-
-		const userDTO = new UserDTO(user);
-		console.log(userDTO);
-		return res.status(200).send({
-			message: "Login Successful",
-			user: userDTO,
-		});
 	}
 }
 

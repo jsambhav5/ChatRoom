@@ -1,4 +1,4 @@
-import { HashService, TokenService, UserService } from "../../services";
+import { HashService, UserService } from "../../services";
 import { UserDTO } from "../../dtos";
 
 class LoginController {
@@ -28,24 +28,9 @@ class LoginController {
 					.json({ message: "Invalid username or password" });
 			}
 
-			// Generating Tokens
-			const { accessToken, refreshToken } = TokenService.generateTokens({
-				_id: user._id,
-				email: user.email,
-			});
-
-			// saving tokens in cookies
-			res.cookie("refreshToken", refreshToken, {
-				maxAge: 1000 * 60 * 60 * 24 * 30,
-				httpOnly: true,
-			});
-
-			res.cookie("accessToken", accessToken, {
-				maxAge: 1000 * 60 * 60 * 24 * 30,
-				httpOnly: true,
-			});
 			const userDTO = new UserDTO(user);
-			return res.status(200).send({
+			const response = await UserService.loginUser(res, user);
+			response.status(200).send({
 				message: "Login Successful",
 				user: userDTO,
 			});

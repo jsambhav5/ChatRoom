@@ -14,3 +14,10 @@
 .signInWrapper {
 	margin-top: 10px;
 }
+
+.signInLink {
+	margin-left: 10px;
+	color: #0077ff;
+	font-weight: bold;
+	text-decoration: none;
+}

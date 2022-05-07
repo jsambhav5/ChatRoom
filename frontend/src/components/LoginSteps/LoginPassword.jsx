@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./LoginSteps.module.css";
+import { Link } from "react-router-dom";
 import { Card, Button, BackButton, TextInput } from "..";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setLogin } from "../../store/loginSlice.js";
@@ -31,8 +32,9 @@ const LoginPassword = () => {
 	}
 
 	return (
-		<Card title="Enter Password" icon="logo">
+		<Card title="Enter Your Password" icon="lock-emoji">
 			<TextInput
+				type="password"
 				value={password}
 				onChange={(e) => setPassword(e.target.value)}
 			/>
@@ -41,10 +43,14 @@ const LoginPassword = () => {
 					<BackButton onClick={back} text="Back" />
 					<Button onClick={next} text="Next" />
 				</div>
-				<p className={styles.bottomParagraph}>
-					By entering your email-id, you’re agreeing to our Terms of
-					Service and Privacy Policy. Thanks!
-				</p>
+				<div className={styles.signUpWrapper}>
+					<span className={styles.hasInvite}>
+						Don't have an Account?
+						<Link className={styles.signUpLink} to="/register">
+							Create New Account
+						</Link>
+					</span>
+				</div>
 			</div>
 		</Card>
 	);
