@@ -14,6 +14,7 @@ const RegisterPassword = () => {
 	const dispatch = useDispatch();
 
 	function next() {
+		if (!password) return;
 		dispatch(savePassword(password));
 		dispatch(setStep(5));
 	}
