@@ -8,6 +8,9 @@ import { setOTP as saveOTP } from "../../store/otpSlice";
 import { setStep } from "../../store/registerSlice";
 
 const RegisterOTP = () => {
+	const [text, setText] = useState(
+		"By entering the OTP, you’re agreeing to our Terms of Service and Privacy Policy. Thanks!"
+	);
 	const [otp, setOTP] = useState("");
 	const { email, hash } = useSelector((state) => state.otp);
 	const dispatch = useDispatch();
@@ -19,18 +22,28 @@ const RegisterOTP = () => {
 				dispatch(setLogin(true));
 				dispatch(setUser(res.data.user));
 				dispatch(setStep(1));
+				dispatch(
+					saveOTP({
+						email: "",
+						hash: "",
+					})
+				);
 			} else if (res.status === 200) {
 				dispatch(setStep(3));
-			} else dispatch(setStep(1));
+				dispatch(
+					saveOTP({
+						email: "",
+						hash: "",
+					})
+				);
+			} else {
+				setText(
+					"OTP Wrong or Expired. Please Check OTP or Go Back and Resend OTP"
+				);
+			}
 		} catch (error) {
-			console.log(error);
-			dispatch(setStep(1));
-		} finally {
-			dispatch(
-				saveOTP({
-					email: "",
-					hash: "",
-				})
+			setText(
+				"OTP Wrong or Expired. Please Check OTP or Go Back and Resend OTP"
 			);
 		}
 	}
@@ -52,10 +65,7 @@ const RegisterOTP = () => {
 						<BackButton onClick={back} text="Back" />
 						<Button onClick={next} text="Next" />
 					</div>
-					<p className={styles.bottomParagraph}>
-						By entering the OTP, you’re agreeing to our Terms of
-						Service and Privacy Policy. Thanks!
-					</p>
+					<p className={styles.bottomParagraph}>{text}</p>
 				</div>
 			</Card>
 		</>
