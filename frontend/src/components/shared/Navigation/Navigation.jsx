@@ -44,7 +44,11 @@ const Navigation = () => {
 				/>
 				<span style={logoText}>ChatRoom</span>
 			</Link>
-			{isLoggedIn && <button onClick={logoutUser}>Logout</button>}
+			{isLoggedIn && (
+				<button onClick={logoutUser}>
+					<img src="/images/logout.png" />
+				</button>
+			)}
 		</nav>
 	);
 };
