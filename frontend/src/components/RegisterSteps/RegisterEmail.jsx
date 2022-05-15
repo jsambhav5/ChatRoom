@@ -4,7 +4,7 @@ import { sendOTP } from "../../http";
 import styles from "./RegisterSteps.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setOTP } from "../../store/otpSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { setStep, setEmail as saveEmail } from "../../store/registerSlice";
 
 const RegisterEmail = () => {
@@ -65,6 +65,12 @@ const RegisterEmail = () => {
 					<Button onClick={next} text="Next" />
 				</div>
 				<p className={styles.bottomParagraph}>{text}</p>
+			</div>
+			<div className={styles.signInWrapper}>
+				<span>Already have an Account?</span>
+				<Link className={styles.signInLink} to="/login">
+					SignIn
+				</Link>
 			</div>
 		</Card>
 	);

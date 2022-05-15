@@ -33,3 +33,14 @@
 	display: inline-block;
 	cursor: pointer;
 }
+
+.signInWrapper {
+	margin-top: 30px;
+}
+
+.signInLink {
+	margin-left: 10px;
+	color: #0077ff;
+	font-weight: bold;
+	text-decoration: none;
+}

@@ -40,12 +40,10 @@ const LoginEmail = () => {
 					<Button onClick={next} text="Next" />
 				</div>
 				<div className={styles.signUpWrapper}>
-					<span className={styles.hasInvite}>
-						Don't have an Account?
-						<Link className={styles.signUpLink} to="/register">
-							Create New Account
-						</Link>
-					</span>
+					<span>Don't have an Account?</span>
+					<Link className={styles.signUpLink} to="/register">
+						Create New Account
+					</Link>
 				</div>
 			</div>
 		</Card>

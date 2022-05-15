@@ -30,9 +30,7 @@ const Home = () => {
 					<Button onClick={startRegister} text="Create New Account" />
 				</div>
 				<div className={styles.signInWrapper}>
-					<span className={styles.hasInvite}>
-						Already have an Account?
-					</span>
+					<span>Already have an Account?</span>
 					<Link className={styles.signInLink} to="/login">
 						SignIn
 					</Link>

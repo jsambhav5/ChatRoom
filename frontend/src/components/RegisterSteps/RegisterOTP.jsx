@@ -6,6 +6,7 @@ import { verifyOTP } from "../../http";
 import { setLogin, setUser } from "../../store/loginSlice";
 import { setOTP as saveOTP } from "../../store/otpSlice";
 import { initRegister, setStep } from "../../store/registerSlice";
+import { Link } from "react-router-dom";
 
 const RegisterOTP = () => {
 	const [text, setText] = useState(
@@ -72,6 +73,12 @@ const RegisterOTP = () => {
 						<Button onClick={next} text="Next" />
 					</div>
 					<p className={styles.bottomParagraph}>{text}</p>
+				</div>
+				<div className={styles.signInWrapper}>
+					<span> Already have an Account?</span>
+					<Link className={styles.signInLink} to="/login">
+						SignIn
+					</Link>
 				</div>
 			</Card>
 		</>
