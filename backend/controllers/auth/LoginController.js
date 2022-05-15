@@ -1,4 +1,4 @@
-import { HashService, UserService } from "../../services";
+import { HashService, TokenService, UserService } from "../../services";
 import { UserDTO } from "../../dtos";
 
 class LoginController {
@@ -40,6 +40,15 @@ class LoginController {
 	}
 
 	async logout(req, res) {
+		const { refreshToken } = req.cookies;
+		try {
+			await TokenService.removeToken(refreshToken);
+			res.clearCookie("refreshToken");
+			res.clearCookie("accessToken");
+		} catch (error) {
+			return res.status(500).send("Internal Server Error");
+		}
+
 		return res.status(200).send("Logout Successful");
 	}
 }

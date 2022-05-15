@@ -15,6 +15,7 @@ export const sendOTP = (data) => api.post("/api/auth/sendOTP", data);
 export const verifyOTP = (data) => api.post("/api/auth/verifyOTP", data);
 export const login = async (data) => api.post("/api/auth/login", data);
 export const register = (data) => api.post("/api/user/register", data);
+export const logout = () => api.post("/api/auth/logout");
 export const hello = () => api.get("/api/rooms/hello");
 
 // Interceptors

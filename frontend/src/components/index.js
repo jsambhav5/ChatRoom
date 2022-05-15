@@ -10,3 +10,4 @@ export { default as RegisterName } from "./RegisterSteps/RegisterName";
 export { default as RegisterAvatar } from "./RegisterSteps/RegisterAvatar";
 export { default as LoginPassword } from "./LoginSteps/LoginPassword";
 export { default as LoginEmail } from "./LoginSteps/LoginEmail";
+export { default as Loader } from "./shared/Loader/Loader";

@@ -32,7 +32,10 @@ class RefreshController {
 				maxAge: 1000 * 60 * 60 * 24 * 30,
 				httpOnly: true,
 			});
-			return res.status(200).json({ message: "Tokens refreshed" });
+			return res.status(200).json({
+				message: "Tokens refreshed",
+				email: userData.email,
+			});
 		}
 
 		// Check is token is in database

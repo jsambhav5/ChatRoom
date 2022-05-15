@@ -6,11 +6,15 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { Home, Register, Login, Rooms } from "./pages";
-import { Navigation } from "./components";
+import { Navigation, Loader } from "./components";
 import { GuestRoute, PrivateRoute } from "./routes";
+import { useLoading } from "./hooks";
 
 const App = () => {
-	return (
+	const { loading } = useLoading();
+	return loading ? (
+		<Loader />
+	) : (
 		<Router className="container">
 			<Navigation />
 			<Routes>
