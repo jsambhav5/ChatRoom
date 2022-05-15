@@ -14,6 +14,7 @@ const LoginEmail = () => {
 	const dispatch = useDispatch();
 
 	function next() {
+		if (!email) return;
 		dispatch(saveEmail(email));
 		dispatch(setStep(2));
 	}

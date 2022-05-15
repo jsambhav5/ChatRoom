@@ -19,6 +19,7 @@ const RegisterEmail = () => {
 	const [loading, setLoading] = useState(false);
 
 	async function next() {
+		if (!email) return;
 		setLoading(true);
 		try {
 			setText("Please Wait...  We are sending you the OTP");
@@ -34,7 +35,7 @@ const RegisterEmail = () => {
 			}
 		} catch (error) {
 			setText("Something went Wrong! Please Try Again");
-			console.log(error);
+			console.log(error.message);
 		} finally {
 			setLoading(false);
 		}

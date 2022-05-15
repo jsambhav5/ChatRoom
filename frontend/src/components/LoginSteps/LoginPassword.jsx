@@ -15,6 +15,7 @@ const LoginPassword = () => {
 	const [loading, setLoading] = useState(false);
 
 	async function next() {
+		if (!email || !password) return;
 		setLoading(true);
 		try {
 			const res = await login({ email, password });

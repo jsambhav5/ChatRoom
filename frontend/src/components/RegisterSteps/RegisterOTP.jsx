@@ -17,6 +17,7 @@ const RegisterOTP = () => {
 	const [loading, setLoading] = useState(false);
 
 	async function next() {
+		if (!otp) return;
 		setLoading(true);
 		try {
 			const res = await verifyOTP({ email, otp, hash });

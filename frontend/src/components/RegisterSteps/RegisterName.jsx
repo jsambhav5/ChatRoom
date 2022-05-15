@@ -11,6 +11,7 @@ const RegisterName = () => {
 	const dispatch = useDispatch();
 
 	function next() {
+		if (!name) return;
 		dispatch(saveName(name));
 		dispatch(setStep(4));
 	}
