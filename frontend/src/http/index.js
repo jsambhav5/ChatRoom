@@ -31,7 +31,7 @@ api.interceptors.response.use(
 		) {
 			originalRequest.isRetry = true;
 			try {
-				await axios.get(
+				await axios.post(
 					`${BASE_URL}:${BACK_END_PORT}/api/auth/refresh`,
 					{
 						withCredentials: true,
