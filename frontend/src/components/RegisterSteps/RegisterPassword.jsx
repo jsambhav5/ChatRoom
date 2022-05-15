@@ -11,10 +11,14 @@ const RegisterPassword = () => {
 	const [password, setPassword] = useState(
 		useSelector((state) => state.register.password)
 	);
+	const [title, setTitle] = useState("Enter Your Password");
 	const dispatch = useDispatch();
 
 	function next() {
-		if (!password) return;
+		if (!password) {
+			setTitle("Password Cannot be Empty");
+			return;
+		}
 		dispatch(savePassword(password));
 		dispatch(setStep(5));
 	}
@@ -24,7 +28,7 @@ const RegisterPassword = () => {
 	}
 
 	return (
-		<Card title="Enter Your Password" icon="lock-emoji">
+		<Card title={title} icon="lock-emoji">
 			<TextInput
 				type="password"
 				value={password}

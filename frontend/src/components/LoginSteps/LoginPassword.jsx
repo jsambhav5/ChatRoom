@@ -8,14 +8,18 @@ import { login } from "../../http";
 import { setStep } from "../../store/loginSlice";
 
 const LoginPassword = () => {
-	const [text, setText] = useState("Enter Your Password");
+	const [title, settitle] = useState("Enter Your Password");
 	const [password, setPassword] = useState("");
 	const email = useSelector((state) => state.login.email);
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
 
 	async function next() {
-		if (!email || !password) return;
+		if (!email || !password) {
+			settitle("Password Cannot be Empty");
+			return;
+		}
+
 		setLoading(true);
 		try {
 			const res = await login({ email, password });
@@ -25,7 +29,7 @@ const LoginPassword = () => {
 				dispatch(setUser(res.data.user));
 			}
 		} catch (error) {
-			setText("Invalid Username or Password");
+			settitle("Invalid Username or Password");
 			console.log(error);
 		} finally {
 			setLoading(false);
@@ -41,7 +45,7 @@ const LoginPassword = () => {
 			<Loader className="container" message="Signing In, Please Wait" />
 		);
 	return (
-		<Card title={text} icon="lock-emoji">
+		<Card title={title} icon="lock-emoji">
 			<TextInput
 				type="password"
 				value={password}

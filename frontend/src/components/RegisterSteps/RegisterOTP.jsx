@@ -11,13 +11,17 @@ const RegisterOTP = () => {
 	const [text, setText] = useState(
 		"By entering the OTP, you’re agreeing to our Terms of Service and Privacy Policy. Thanks!"
 	);
+	const [title, setTitle] = useState("Enter the OTP");
 	const [otp, setOTP] = useState("");
 	const { email, hash } = useSelector((state) => state.otp);
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
 
 	async function next() {
-		if (!otp || !hash || !email) return;
+		if (!otp || !hash || !email) {
+			setTitle("OTP Cannot be Empty");
+			return;
+		}
 		setLoading(true);
 		try {
 			const res = await verifyOTP({ email, otp, hash });
@@ -56,7 +60,7 @@ const RegisterOTP = () => {
 		);
 	return (
 		<>
-			<Card title="Enter the OTP" icon="lock-emoji" alt="lock">
+			<Card title={title} icon="lock-emoji" alt="lock">
 				<TextInput
 					type="password"
 					value={otp}

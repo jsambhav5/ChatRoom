@@ -8,10 +8,14 @@ const RegisterName = () => {
 	const [name, setName] = useState(
 		useSelector((state) => state.register.name)
 	);
+	const [title, setTitle] = useState("What's Your Full Name");
 	const dispatch = useDispatch();
 
 	function next() {
-		if (!name) return;
+		if (!name) {
+			setTitle("Name Cannot be Empty");
+			return;
+		}
 		dispatch(saveName(name));
 		dispatch(setStep(4));
 	}
@@ -21,7 +25,7 @@ const RegisterName = () => {
 	}
 
 	return (
-		<Card title="What's Your Full Name" icon="goggle-emoji">
+		<Card title={title} icon="goggle-emoji">
 			<p className={styles.subHeading}>
 				People use real names at ChatRoom 😅
 			</p>

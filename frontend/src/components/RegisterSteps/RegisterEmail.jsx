@@ -11,6 +11,7 @@ const RegisterEmail = () => {
 	const [text, setText] = useState(
 		"By entering your email-id, you’re agreeing to our Terms of Service and Privacy Policy. Thanks!"
 	);
+	const [title, setTitle] = useState("Enter Your Email Address");
 	const [email, setEmail] = useState(
 		useSelector((state) => state.register.email)
 	);
@@ -19,12 +20,14 @@ const RegisterEmail = () => {
 	const [loading, setLoading] = useState(false);
 
 	async function next() {
-		if (!email) return;
+		if (!email) {
+			setTitle("Email Cannot be Empty");
+			return;
+		}
 		setLoading(true);
 		try {
 			setText("Please Wait...  We are sending you the OTP");
 			const res = await sendOTP({ email });
-			console.log(res);
 			if (res.status === 200) {
 				const { email, hash } = res.data;
 				dispatch(setOTP({ email, hash }));
@@ -50,7 +53,7 @@ const RegisterEmail = () => {
 			<Loader className="container" message="Sending OTP, Please Wait" />
 		);
 	return (
-		<Card title="Enter Your Email Address" icon="email-emoji">
+		<Card title={title} icon="email-emoji">
 			<TextInput
 				type="email"
 				value={email}

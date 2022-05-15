@@ -7,6 +7,7 @@ import { setEmail as saveEmail } from "../../store/loginSlice.js";
 import { setStep } from "../../store/loginSlice";
 
 const LoginEmail = () => {
+	const [title, settitle] = useState("Enter Your Email Address");
 	const [email, setEmail] = useState(
 		useSelector((state) => state.login.email)
 	);
@@ -14,7 +15,10 @@ const LoginEmail = () => {
 	const dispatch = useDispatch();
 
 	function next() {
-		if (!email) return;
+		if (!email) {
+			settitle("Email Cannot be Empty");
+			return;
+		}
 		dispatch(saveEmail(email));
 		dispatch(setStep(2));
 	}
@@ -24,7 +28,7 @@ const LoginEmail = () => {
 	}
 
 	return (
-		<Card title="Enter Your Email Address" icon="email-emoji">
+		<Card title={title} icon="email-emoji">
 			<TextInput
 				type="email"
 				value={email}

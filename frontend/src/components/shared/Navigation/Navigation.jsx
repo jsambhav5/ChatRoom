@@ -46,7 +46,7 @@ const Navigation = () => {
 			</Link>
 			{isLoggedIn && (
 				<button onClick={logoutUser}>
-					<img src="/images/logout.png" />
+					<img src="/images/logout.png" alt="logout" />
 				</button>
 			)}
 		</nav>
