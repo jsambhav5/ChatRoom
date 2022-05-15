@@ -27,7 +27,7 @@ export default function useLoadingWithRefresh() {
 					dispatch(setStep(3));
 				}
 			} catch (error) {
-				console.log(error);
+				console.log(error.message);
 			} finally {
 				setLoading(false);
 			}

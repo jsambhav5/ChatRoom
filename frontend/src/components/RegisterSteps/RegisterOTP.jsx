@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Card, Button, BackButton, TextInput } from "..";
+import { Card, Button, BackButton, TextInput, Loader } from "..";
 import styles from "./RegisterSteps.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { verifyOTP } from "../../http";
 import { setLogin, setUser } from "../../store/loginSlice";
 import { setOTP as saveOTP } from "../../store/otpSlice";
-import { setStep } from "../../store/registerSlice";
+import { initRegister, setStep } from "../../store/registerSlice";
 
 const RegisterOTP = () => {
 	const [text, setText] = useState(
@@ -14,28 +14,19 @@ const RegisterOTP = () => {
 	const [otp, setOTP] = useState("");
 	const { email, hash } = useSelector((state) => state.otp);
 	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(false);
 
 	async function next() {
+		setLoading(true);
 		try {
 			const res = await verifyOTP({ email, otp, hash });
 			if (res.status === 200 && res.data.user !== undefined) {
 				dispatch(setLogin(true));
 				dispatch(setUser(res.data.user));
 				dispatch(setStep(1));
-				dispatch(
-					saveOTP({
-						email: "",
-						hash: "",
-					})
-				);
+				dispatch(initRegister());
 			} else if (res.status === 200) {
 				dispatch(setStep(3));
-				dispatch(
-					saveOTP({
-						email: "",
-						hash: "",
-					})
-				);
 			} else {
 				setText(
 					"OTP Wrong or Expired. Please Check OTP or Go Back and Resend OTP"
@@ -45,6 +36,9 @@ const RegisterOTP = () => {
 			setText(
 				"OTP Wrong or Expired. Please Check OTP or Go Back and Resend OTP"
 			);
+		} finally {
+			dispatch(saveOTP({ email: "", hash: "" }));
+			setLoading(false);
 		}
 	}
 
@@ -52,6 +46,13 @@ const RegisterOTP = () => {
 		dispatch(setStep(1));
 	}
 
+	if (loading)
+		return (
+			<Loader
+				className="container"
+				message="Verifying OTP, Please Wait"
+			/>
+		);
 	return (
 		<>
 			<Card title="Enter the OTP" icon="lock-emoji" alt="lock">

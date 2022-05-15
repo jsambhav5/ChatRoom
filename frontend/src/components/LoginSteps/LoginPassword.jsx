@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import styles from "./LoginSteps.module.css";
 import { Link } from "react-router-dom";
-import { Card, Button, BackButton, TextInput } from "..";
+import { Card, Button, BackButton, TextInput, Loader } from "../";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setLogin } from "../../store/loginSlice.js";
 import { login } from "../../http";
 import { setStep } from "../../store/loginSlice";
 
 const LoginPassword = () => {
+	const [text, setText] = useState("Enter Your Password");
 	const [password, setPassword] = useState("");
 	const email = useSelector((state) => state.login.email);
 	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(false);
 
 	async function next() {
+		setLoading(true);
 		try {
 			const res = await login({ email, password });
 			if (res.status === 200) {
@@ -20,10 +23,11 @@ const LoginPassword = () => {
 				dispatch(setLogin(true));
 				dispatch(setUser(res.data.user));
 			}
-			dispatch(setStep(1));
 		} catch (error) {
-			dispatch(setStep(1));
+			setText("Invalid Username or Password");
 			console.log(error);
+		} finally {
+			setLoading(false);
 		}
 	}
 
@@ -31,8 +35,12 @@ const LoginPassword = () => {
 		dispatch(setStep(1));
 	}
 
+	if (loading)
+		return (
+			<Loader className="container" message="Signing In, Please Wait" />
+		);
 	return (
-		<Card title="Enter Your Password" icon="lock-emoji">
+		<Card title={text} icon="lock-emoji">
 			<TextInput
 				type="password"
 				value={password}
