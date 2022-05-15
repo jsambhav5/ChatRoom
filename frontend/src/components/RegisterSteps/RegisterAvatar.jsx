@@ -29,6 +29,7 @@ const RegisterAvatar = () => {
 	}
 
 	async function next() {
+		if (!email || !name || !password || !avatar) return;
 		setLoading(true);
 		try {
 			const res = await register({ email, name, password, avatar });
