@@ -11,9 +11,17 @@ class OtpService {
 		const subject = "ChatRoom OTP";
 		const body = `<h4>Your Registration OTP for Chat-Room is ${OTP}</h4>`;
 
-		await MailService.sendMail(email, subject, body).catch((error) =>
-			console.log(error.message)
-		);
+		try {
+			const result = await MailService.sendMail(
+				email,
+				subject,
+				body
+			).catch((error) => console.log(error.message));
+
+			return result;
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	checkOTP(hashedOTP, data) {

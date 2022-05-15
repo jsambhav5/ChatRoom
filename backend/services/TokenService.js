@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
 import { JWT_ACCESS_TOKEN_SECRET, JWT_REFRESH_TOKEN_SECRET } from "../config";
-import refreshModel from "../models/refreshModel";
+import { RefreshModel } from "../models";
 
 class TokenService {
 	generateTokens(payload) {
 		const accessToken = jwt.sign(payload, JWT_ACCESS_TOKEN_SECRET, {
-			expiresIn: "1h",
+			expiresIn: "15m",
 		});
 
 		const refreshToken = jwt.sign(payload, JWT_REFRESH_TOKEN_SECRET, {
@@ -17,7 +17,7 @@ class TokenService {
 
 	async storeRefreshToken(token, userId) {
 		try {
-			await refreshModel.create({ token, userId });
+			await RefreshModel.create({ token, userId });
 		} catch (error) {
 			console.log(error.message);
 		}
@@ -28,7 +28,21 @@ class TokenService {
 	}
 
 	async verifyRefreshToken(refreshToken) {
-		return jwt.verify(refreshToken, JWT_ACCESS_TOKEN_SECRET);
+		return jwt.verify(refreshToken, JWT_REFRESH_TOKEN_SECRET);
+	}
+
+	async findRefreshToken(userId, refreshToken) {
+		return await RefreshModel.findOne({
+			userId,
+			token: refreshToken,
+		});
+	}
+
+	async updateRefreshToken(oldRefreshToken, newRefreshToken) {
+		return await RefreshModel.updateOne(
+			{ token: oldRefreshToken },
+			{ token: newRefreshToken }
+		);
 	}
 }
 
