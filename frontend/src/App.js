@@ -13,7 +13,7 @@ import { useLoading } from "./hooks";
 const App = () => {
 	const { loading } = useLoading();
 	return loading ? (
-		<Loader />
+		<Loader className="container" message="Loading, Please Wait...." />
 	) : (
 		<Router className="container">
 			<Navigation />

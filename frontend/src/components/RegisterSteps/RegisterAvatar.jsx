@@ -1,5 +1,5 @@
 import React, { useState } from "react"; //, { useState }
-import { Card, Button, BackButton } from "..";
+import { Card, Button, BackButton, Loader } from "..";
 import styles from "./RegisterSteps.module.css";
 import {
 	setAvatar as saveAvatar,
@@ -16,6 +16,7 @@ const RegisterAvatar = () => {
 	);
 	const [image, setImage] = useState(avatar);
 	const dispatch = useDispatch();
+	const [loading, setLoading] = useState(false);
 
 	function captureImage(e) {
 		const file = e.target.files[0];
@@ -28,6 +29,7 @@ const RegisterAvatar = () => {
 	}
 
 	async function next() {
+		setLoading(true);
 		try {
 			const res = await register({ email, name, password, avatar });
 			if (res.status === 201) {
@@ -40,6 +42,8 @@ const RegisterAvatar = () => {
 		} catch (error) {
 			dispatch(setStep(3));
 			console.log(error);
+		} finally {
+			setLoading(false);
 		}
 	}
 
@@ -47,12 +51,16 @@ const RegisterAvatar = () => {
 		dispatch(setStep(4));
 	}
 
+	if (loading)
+		return (
+			<Loader
+				className="container"
+				message="Creating Account, Please Wait"
+			/>
+		);
 	return (
 		<>
-			<Card
-				title={`Okay, ${useSelector((state) => state.register.name)}`}
-				icon="monkey-emoji"
-			>
+			<Card title={`Okay, ${name}`} icon="monkey-emoji">
 				<p className={styles.subHeading}>How’s this photo?</p>
 				<div className={styles.avatarWrapper}>
 					<img
