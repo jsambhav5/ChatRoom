@@ -1,6 +1,7 @@
 import { OtpService, HashService } from "../../services";
 import { UserService, TokenService } from "../../services";
 import { UserDTO } from "../../dtos";
+import { GMAIL_EMAIL_FROM } from "../../config";
 
 class OtpController {
 	async newOTP(req, res) {
@@ -20,7 +21,13 @@ class OtpController {
 
 		// send-OTP
 		try {
-			await OtpService.sendOTP(email, otp);
+			const result = await OtpService.sendOTP(email, otp);
+
+			if (result.envelope.from !== GMAIL_EMAIL_FROM) {
+				return res.status(500).json({
+					message: "Unable to send OTP",
+				});
+			}
 
 			return res.status(200).json({
 				email,

@@ -4,6 +4,7 @@ import { authRouter, userRouter, roomRouter } from "./routes";
 import { DatabaseService } from "./services";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { AuthMiddleware } from "./middlewares";
 
 const corsConfig = {
 	origin: [`${BASE_URL}:${FRONT_END_PORT}`],
@@ -19,7 +20,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use("/storage", express.static("storage"));
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-app.use("/api/rooms", roomRouter);
+app.use("/api/rooms", AuthMiddleware.userAuth, roomRouter);
 
 app.get("/", (req, res) => {
 	res.send("Hello from express Js");

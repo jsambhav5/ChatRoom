@@ -7,11 +7,11 @@ import {
 } from "react-router-dom";
 import { Home, Register, Login, Rooms } from "./pages";
 import { Navigation } from "./components";
-import { GuestRoute, PrivateRoute } from "./Routes";
+import { GuestRoute, PrivateRoute } from "./routes";
 
 const App = () => {
 	return (
-		<Router>
+		<Router className="container">
 			<Navigation />
 			<Routes>
 				<Route

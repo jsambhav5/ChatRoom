@@ -21,6 +21,7 @@ const RegisterEmail = () => {
 		try {
 			setText("Please Wait...  We are sending you the OTP");
 			const res = await sendOTP({ email });
+			console.log(res);
 			if (res.status === 200) {
 				const { email, hash } = res.data;
 				dispatch(setOTP({ email, hash }));
