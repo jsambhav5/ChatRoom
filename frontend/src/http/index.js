@@ -33,6 +33,7 @@ api.interceptors.response.use(
 			try {
 				await axios.post(
 					`${BASE_URL}:${BACK_END_PORT}/api/auth/refresh`,
+					{},
 					{
 						withCredentials: true,
 					}
