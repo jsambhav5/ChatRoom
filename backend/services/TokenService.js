@@ -5,7 +5,7 @@ import { RefreshModel } from "../models";
 class TokenService {
 	generateTokens(payload) {
 		const accessToken = jwt.sign(payload, JWT_ACCESS_TOKEN_SECRET, {
-			expiresIn: "10s",
+			expiresIn: "20m",
 		});
 
 		const refreshToken = jwt.sign(payload, JWT_REFRESH_TOKEN_SECRET, {
