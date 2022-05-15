@@ -10,6 +10,6 @@ const router = Router();
 router.post("/sendOTP", OtpController.newOTP);
 router.post("/verifyOTP", OtpController.verifyOTP);
 router.post("/login", LoginController.login);
-router.get("/refresh", RefreshController.refresh);
+router.post("/refresh", RefreshController.refresh);
 
 export default router;
