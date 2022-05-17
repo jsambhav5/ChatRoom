@@ -5,7 +5,7 @@ import {
 	Route,
 	Navigate,
 } from "react-router-dom";
-import { Home, Register, Login, Rooms } from "./pages";
+import { Home, Register, Login, Rooms, Profile } from "./pages";
 import { Navigation, Loader } from "./components";
 import { GuestRoute, PrivateRoute } from "./routes";
 import { useLoading } from "./hooks";
@@ -54,6 +54,15 @@ const App = () => {
 					element={
 						<PrivateRoute>
 							<Rooms />
+						</PrivateRoute>
+					}
+				/>
+
+				<Route
+					path="/profile"
+					element={
+						<PrivateRoute>
+							<Profile />
 						</PrivateRoute>
 					}
 				/>
