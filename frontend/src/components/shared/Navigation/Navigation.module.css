@@ -2,6 +2,18 @@
 	padding: 20px 0px;
 	display: flex;
 	justify-content: space-between;
+	position: relative;
+	margin-bottom: 30px;
+}
+
+.navbar::after {
+	content: "";
+	position: absolute;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background: #0077ff;
 }
 
 .logo {
@@ -12,4 +24,27 @@
 .navRight {
 	display: flex;
 	align-items: center;
+}
+
+.avatar {
+	width: "40";
+	height: "40";
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3px solid #0077ff;
+	margin: 0 20px;
+}
+
+.profileButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+}
+
+.userName {
+	color: white;
+	font-style: normal;
+	font-size: large;
+	font-weight: bold;
 }

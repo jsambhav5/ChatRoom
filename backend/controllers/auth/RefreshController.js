@@ -5,7 +5,7 @@ class RefreshController {
 	async refresh(req, res) {
 		// Get refresh token from header
 		const { refreshToken: refreshTokenFromCookie } = req.cookies;
-		console.log(refreshTokenFromCookie);
+
 		// Check validity
 		let userData;
 		try {
@@ -13,7 +13,6 @@ class RefreshController {
 				refreshTokenFromCookie
 			);
 		} catch (error) {
-			console.log(userData);
 			return res.status(401).json({ message: "Invalid Token" });
 		}
 

@@ -36,7 +36,7 @@ body {
 }
 
 .container {
-	width: 1200px;
+	width: 1400px;
 	max-width: 90%;
 	margin: 0 auto;
 }
@@ -46,6 +46,14 @@ body {
 	align-items: center;
 	justify-content: center;
 	min-height: calc(100vh - 140px);
+}
+
+button {
+	border: none;
+	background: none;
+	outline: none;
+	cursor: pointer;
+	font-weight: bold;
 }
 
 input#avatarInput {

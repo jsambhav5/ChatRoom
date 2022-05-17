@@ -11,3 +11,4 @@ export { default as RegisterAvatar } from "./RegisterSteps/RegisterAvatar";
 export { default as LoginPassword } from "./LoginSteps/LoginPassword";
 export { default as LoginEmail } from "./LoginSteps/LoginEmail";
 export { default as Loader } from "./shared/Loader/Loader";
+export { default as RoomCard } from "./RoomCard/RoomCard";
