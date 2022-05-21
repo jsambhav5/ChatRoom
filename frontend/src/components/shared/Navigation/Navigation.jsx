@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logout } from "../../../http";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Navigation.module.css";
@@ -7,7 +7,7 @@ import { setLogin, setUser, setEmail } from "../../../store/loginSlice";
 
 const Navigation = () => {
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
+
 	const { isLoggedIn, user } = useSelector((state) => state.login);
 	const brandStyle = {
 		color: "#fff",
@@ -21,10 +21,6 @@ const Navigation = () => {
 	const logoText = {
 		marginLeft: "10px",
 	};
-
-	function profileButton() {
-		navigate("/profile");
-	}
 
 	async function logoutUser() {
 		try {
@@ -41,22 +37,18 @@ const Navigation = () => {
 
 	return (
 		<nav className={`${styles.navbar} container`}>
-			<button onClick={profileButton} style={brandStyle}>
+			<Link to="/" style={brandStyle}>
 				<img
 					src="/images/logo.png"
 					className={`${styles.logo}`}
 					alt="Logo"
 				/>
 				<span style={logoText}>ChatRoom</span>
-			</button>
+			</Link>
 
 			{isLoggedIn && (
 				<div className={styles.navRight}>
-					<button
-						onClick={profileButton}
-						className={styles.profileButton}
-						to="/"
-					>
+					<Link className={styles.profileButton} to="profile">
 						<h3 className={styles.userName}>{user.name}</h3>
 						<img
 							className={styles.avatar}
@@ -65,7 +57,7 @@ const Navigation = () => {
 							height="40"
 							alt="avatar"
 						/>
-					</button>
+					</Link>
 					<button onClick={logoutUser}>
 						<img src="/images/logout.png" alt="logout" />
 					</button>
