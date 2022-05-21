@@ -7,20 +7,7 @@ import { setLogin, setUser, setEmail } from "../../../store/loginSlice";
 
 const Navigation = () => {
 	const dispatch = useDispatch();
-
 	const { isLoggedIn, user } = useSelector((state) => state.login);
-	const brandStyle = {
-		color: "#fff",
-		textDecoration: "none",
-		fontWeight: "bold",
-		fontSize: "22px",
-		display: "flex",
-		alignItems: "center",
-	};
-
-	const logoText = {
-		marginLeft: "10px",
-	};
 
 	async function logoutUser() {
 		try {
@@ -37,18 +24,18 @@ const Navigation = () => {
 
 	return (
 		<nav className={`${styles.navbar} container`}>
-			<Link to="/" style={brandStyle}>
+			<Link className={styles.navLink} to="/">
 				<img
 					src="/images/logo.png"
 					className={`${styles.logo}`}
 					alt="Logo"
 				/>
-				<span style={logoText}>ChatRoom</span>
+				<span className={styles.logoText}>ChatRoom</span>
 			</Link>
 
 			{isLoggedIn && (
 				<div className={styles.navRight}>
-					<Link className={styles.profileButton} to="profile">
+					<Link className={styles.navLink} to="profile">
 						<h3 className={styles.userName}>{user.name}</h3>
 						<img
 							className={styles.avatar}
