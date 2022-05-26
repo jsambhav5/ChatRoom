@@ -3,6 +3,7 @@ import { RoomController } from "../controllers";
 
 const router = Router();
 
-router.get("/hello", RoomController.hello);
+router.post("/", RoomController.create);
+router.get("/", RoomController.index);
 
 export default router;

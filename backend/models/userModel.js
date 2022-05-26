@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { BASE_URL, BACK_END_PORT } from "../config";
 
 const userSchema = new Schema(
 	{
@@ -17,10 +18,14 @@ const userSchema = new Schema(
 		avatar: {
 			type: String,
 			required: true,
+			get: (avatar) => {
+				return `${BASE_URL}:${BACK_END_PORT}${avatar}`;
+			},
 		},
 	},
 	{
 		timestamps: true,
+		toJSON: { getters: true },
 	}
 );
 
