@@ -35,6 +35,17 @@ class RoomController {
 			return res.status(500).json({ message: "Could not Fetch Rooms" });
 		}
 	}
+
+	async show(req, res) {
+		try {
+			const room = await RoomService.getRoom(req.params.roomId);
+			return res.status(200).json(room);
+		} catch (error) {
+			return res
+				.status(500)
+				.json({ message: "Could not Fetch the Room" });
+		}
+	}
 }
 
 export default new RoomController();
