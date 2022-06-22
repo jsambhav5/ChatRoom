@@ -8,9 +8,10 @@ import { getRoom } from "../../http";
 const Room = () => {
 	const { id: roomId } = useParams();
 	const { user } = useSelector((state) => state.login);
-	const { clients, provideRef } = useWebRTC(roomId, user);
+	const { clients, provideRef, handleMute } = useWebRTC(roomId, user);
 	const navigate = useNavigate();
 	const [room, setRoom] = useState(null);
+	const [isMuted, setMuted] = useState(true);
 
 	useEffect(() => {
 		const fetchRoom = async () => {
@@ -20,6 +21,17 @@ const Room = () => {
 
 		fetchRoom();
 	}, [roomId]);
+
+	useEffect(() => {
+		handleMute(isMuted, user.id);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isMuted]);
+
+	const handleMuteClick = (clientId) => {
+		if (clientId !== user.id) return;
+		setMuted((prev) => !prev);
+	};
 
 	const leaveRoom = () => {
 		navigate("/rooms");
@@ -42,7 +54,10 @@ const Room = () => {
 							<img src="/images/palm.png" alt="palm" />
 						</button>
 
-						<button className={styles.actionButton}>
+						<button
+							onClick={leaveRoom}
+							className={styles.actionButton}
+						>
 							<img src="/images/win.png" alt="win" />
 							<span>Leave Quietly</span>
 						</button>
@@ -55,22 +70,35 @@ const Room = () => {
 							<div key={client.id} className={styles.client}>
 								<div className={styles.userHead}>
 									<audio
-										ref={(instance) =>
-											provideRef(instance, client.id)
-										}
 										autoPlay
-									></audio>
+										ref={(instance) => {
+											provideRef(instance, client.id);
+										}}
+									/>
 									<img
 										className={styles.userAvatar}
 										src={client.avatar}
 										alt="avatar"
 									/>
-									<button>
-										<img
-											className={styles.micButton}
-											src="/images/mic-mute.png"
-											alt="mic"
-										/>
+									<button
+										onClick={() =>
+											handleMuteClick(client.id)
+										}
+										className={styles.micButton}
+									>
+										{client.muted ? (
+											<img
+												className={styles.mic}
+												src="/images/mic-mute.png"
+												alt="mic"
+											/>
+										) : (
+											<img
+												className={styles.micImg}
+												src="/images/mic.png"
+												alt="mic"
+											/>
+										)}
 									</button>
 								</div>
 								<h4>{client.name}</h4>

@@ -10,6 +10,7 @@ export default function useWebRTC(roomId, user) {
 	const connections = useRef({});
 	const localMediaStream = useRef(null);
 	const socket = useRef(null);
+	const clientsRef = useRef(null);
 
 	const addNewClient = useCallback(
 		(newClient, cb) => {
@@ -28,6 +29,10 @@ export default function useWebRTC(roomId, user) {
 	);
 
 	useEffect(() => {
+		clientsRef.current = clients;
+	}, [clients]);
+
+	useEffect(() => {
 		socket.current = socketInit();
 	}, []);
 
@@ -41,11 +46,11 @@ export default function useWebRTC(roomId, user) {
 		};
 
 		startCapture().then(() => {
-			addNewClient(user, () => {
+			addNewClient({ ...user, muted: true }, () => {
 				const localAudioElement = audioElements.current[user.id];
 
 				if (localAudioElement) {
-					localAudioElement.volume = 0;
+					localAudioElement.volume = 100;
 					localAudioElement.srcObject = localMediaStream.current;
 				}
 			});
@@ -94,7 +99,7 @@ export default function useWebRTC(roomId, user) {
 			connections.current[peerId].ontrack = ({
 				streams: [remoteStream],
 			}) => {
-				addNewClient(remoteUser, () => {
+				addNewClient({ ...remoteUser, muted: true }, () => {
 					if (audioElements.current[remoteUser.id]) {
 						audioElements.current[remoteUser.id].srcObject =
 							remoteStream;
@@ -212,9 +217,63 @@ export default function useWebRTC(roomId, user) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	// Listen for Mute/Unmute
+	useEffect(() => {
+		socket.current.on(ACTIONS.MUTE, ({ peerId, userId }) => {
+			setMuted(true, userId);
+		});
+
+		socket.current.on(ACTIONS.UNMUTE, ({ peerId, userId }) => {
+			setMuted(false, userId);
+		});
+
+		const setMuted = (mute, userId) => {
+			const clientIndex = clientsRef.current
+				.map((client) => client.id)
+				.indexOf(userId);
+
+			const connetedClients = JSON.parse(
+				JSON.stringify(clientsRef.current)
+			);
+
+			if (clientIndex > -1) {
+				connetedClients[clientIndex].muted = mute;
+				setClients(connetedClients);
+			}
+		};
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	const provideRef = (instance, userId) => {
 		audioElements.current[userId] = instance;
 	};
 
-	return { clients, provideRef };
+	// Handling Mute
+	const handleMute = (isMuted, userId) => {
+		let settled = false;
+
+		let interval = setInterval(() => {
+			if (localMediaStream.current) {
+				localMediaStream.current.getTracks()[0].enabled = !isMuted;
+				if (isMuted) {
+					socket.current.emit(ACTIONS.MUTE, {
+						roomId,
+						userId: user.id,
+					});
+				} else {
+					socket.current.emit(ACTIONS.UNMUTE, {
+						roomId,
+						userId: user.id,
+					});
+				}
+				settled = true;
+			}
+			if (settled) {
+				clearInterval(interval);
+			}
+		}, 200);
+	};
+
+	return { clients, provideRef, handleMute };
 }
