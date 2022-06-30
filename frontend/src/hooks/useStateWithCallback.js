@@ -14,10 +14,10 @@ export default function useStateWithCallback(initialState) {
 
 	useEffect(() => {
 		if (cbRef.current) {
-			cbRef.current();
+			cbRef.current(state);
 			cbRef.current = null;
 		}
-	}, []);
+	}, [state]);
 
 	return [state, updateState];
 }

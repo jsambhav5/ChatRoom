@@ -50,10 +50,6 @@ const Room = () => {
 				<div className={styles.header}>
 					<h2 className={styles.topic}>{room?.topic}</h2>
 					<div className={styles.actions}>
-						<button className={styles.actionButton}>
-							<img src="/images/palm.png" alt="palm" />
-						</button>
-
 						<button
 							onClick={leaveRoom}
 							className={styles.actionButton}
@@ -69,16 +65,16 @@ const Room = () => {
 						return (
 							<div key={client.id} className={styles.client}>
 								<div className={styles.userHead}>
+									<img
+										className={styles.userAvatar}
+										src={client.avatar}
+										alt="avatar"
+									/>
 									<audio
 										autoPlay
 										ref={(instance) => {
 											provideRef(instance, client.id);
 										}}
-									/>
-									<img
-										className={styles.userAvatar}
-										src={client.avatar}
-										alt="avatar"
 									/>
 									<button
 										onClick={() =>
